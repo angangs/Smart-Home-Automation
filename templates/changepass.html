@@ -1,0 +1,91 @@
+$def with (form)
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Sweet Home</title>
+
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/app.css">
+        <link rel="shortcut icon" href="../images/favico.ico">
+
+        <style>
+            footer {
+                font-size:70%;
+            }
+            h1 {
+            text-align: center;
+            font-weight: bold;
+            color:darkgrey;
+            font-size:155%;
+            }
+            p  {
+            font-weight: bold;
+            color:darkslategrey;
+            font-size:125%;
+            }
+        </style>
+    </head>
+    <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/">Sweet Home</a>
+            </div>
+
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+
+                </ul>
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+
+    <div class="container">
+    <div class="row">
+    <div class="col-sm-12 col-md-4 col-md-offset-4">
+    <div class="account-wall">
+        <img class="profile-img" src="../images/home.png" alt="" width="100%" height="100%">
+        <h1>Change Password</h1>
+        <form id="login" class="form-signin center_div" method="POST">
+            $:form.render()
+        </form>
+
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <hr width="100%">
+
+    <footer>
+    <p>All Rights Reserved. Powered by Angelos Angelidakis &copy;</p>
+    </footer>
+
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script type="text/javascript">
+        var element = document.getElementById("Update");
+        element.classList.add('btn', 'btn-primary', 'btn-block', 'btn-lg');
+
+        var element = document.getElementById("oldpass");
+        element.classList.add('form-control');
+
+        var element = document.getElementById("newpass");
+        element.classList.add('form-control');
+
+        document.getElementsByTagName("input")[0].setAttribute("placeholder","Old Password");
+        document.getElementsByTagName("input")[0].setAttribute("autofocus","autofocus");
+        document.getElementsByTagName("input")[1].setAttribute("placeholder","New Password");
+        document.getElementsByTagName("input")[1].setAttribute("autofocus","autofocus");
+    </script>
+    </body>
+</html>

@@ -1,0 +1,483 @@
+$def with (analogout)
+
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>Sweet Home</title>
+
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="../static/css/app.css">
+        <link rel="shortcut icon" href="../images/favico.ico">
+
+        <style>
+            footer {
+                font-size:70%;
+            }
+            h1 {
+            font-weight: bold;
+            color:darkgrey;
+            font-size:125%;
+            }
+            p  {
+            font-weight: bold;
+            color:darkslategrey;
+            font-size:125%;
+            }
+            label  {
+            font-weight: bold;
+            color:darkslategrey;
+            font-size:125%;
+            }
+        </style>
+
+
+    </head>
+    <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+       <div class="container">
+         <div class="navbar-header">
+           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/index">Sweet Home</a>
+         </div>
+
+         <div class="collapse navbar-collapse">
+           <ul class="nav navbar-nav">
+             <li class="active"><a href="/index">Home</a></li>
+             <li><a href="/changepass">Change Password</a></li>
+             <li><a href="/logout">Logout</a></li>
+           </ul>
+         </div><!--/.nav-collapse -->
+       </div>
+    </div>
+
+    <div id="wrap">
+        <header>
+            <div class="wrap">
+                <h2>Digital Input</h2>
+            </div>
+        </header>
+
+        <div class="container">
+            <p id="id1"></p>
+        </div>
+
+        <header>
+            <div class="wrap">
+                <h2>Digital Output</h2>
+            </div>
+        </header>
+
+        <div class="container">
+                <div class="col-md-2 col-xs-6">
+                    <div class="form-group">
+                        <button id="buttonrelay1" type="sumbit" class="btn btn-default btn-lg">Relay1</button>
+                        <label id="id10" ></label>
+                    </div>
+                    <div class="form-group">
+                        <button id="buttonrelay2" type="sumbit" class="btn btn-default btn-lg">Relay2</button>
+                        <label id="id11"></label>
+                    </div>
+                    <div class="form-group">
+                        <button id="buttonrelay3" type="sumbit" class="btn btn-default btn-lg">Relay3</button>
+                        <label id="id12" ></label>
+                    </div>
+                    <div class="form-group">
+                        <button id="buttonrelay4" type="sumbit" class="btn btn-default btn-lg">Relay4</button>
+                        <label id="id13" ></label>
+                        <hr width="1" size="10">
+                    </div>
+                </div>
+
+                <div class="col-md-2 col-xs-6">
+                    <div class="form-group">
+                        <button id="buttonrelay5" type="sumbit" class="btn btn-default btn-lg">Relay5</button>
+                        <label id="id14" ></label>
+                    </div>
+                    <div class="form-group">
+                        <button id="buttonrelay6" type="sumbit" class="btn btn-default btn-lg">Relay6</button>
+                        <label id="id15" ></label>
+                    </div>
+                    <div class="form-group">
+                        <button id="buttonrelay7" type="sumbit" class="btn btn-default btn-lg">Relay7</button>
+                        <label id="id16" ></label>
+                    </div>
+                    <div class="form-group">
+                        <button id="buttonrelay8" type="sumbit" class="btn btn-default btn-lg">Relay8</button>
+                        <label id="id17" ></label>
+                    </div>
+                </div>
+        </div>
+
+        <header>
+            <div class="wrap">
+                <h2>Analog Input</h2>
+            </div>
+        </header>
+
+        <div class="container">
+            <p id="id2"></p>
+            <hr width="100%">
+            <p id="id3"></p>
+        </div>
+
+
+        <header>
+            <div class="wrap">
+                <h2>Analog Output</h2>
+            </div>
+        </header>
+
+        <div class="container">
+           <form id="manualform" method="post">
+                $:analogout.render()
+            </form>
+            <hr width="100%">
+            <p id="id4"></p>
+        </div>
+
+    </div>
+
+    <hr width="100%">
+
+    <footer>
+    <p>All Rights Reserved. Powered by Angelos Angelidakis &copy;</p>
+    </footer>
+
+    <script src="../static/js/jquery.js"></script>
+    <script src="../static/js/bootstrap.min.js"></script>
+    <script src="../static/js/app.js"></script>
+    <script type="text/javascript">
+        var element = document.getElementById("Submit");
+        element.classList.add('btn', 'btn-default', 'btn-lg');
+        var element = document.getElementById("AO");
+        element.classList.add('form-control');
+        document.getElementById("AO").setAttribute("placeholder","Voltage (0V-10V)");
+    </script>
+
+    <script src="../static/js/jquery.js"></script>
+        <script type="text/javascript">
+            var myutil = function(){
+                jQuery.ajax({
+                    type: "POST",
+                    url: "loggedinout",
+                    success: function (logged) {
+                        if(logged!="True"){
+                            window.location.replace("/");
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusdigitalinput",
+                    success: function (st) {
+                        var array = st.split(',');
+                        in1 = array[0]
+                        in1 = in1.replace('[','');
+                        if(in1=="0"){
+                            in1 = "I"
+                        }else{
+                            in1 = "O"
+                        }
+                        in2 = array[1]
+                        in2 = in2.replace(' ','');
+                        if(in2=="0"){
+                            in2 = "I"
+                        }else{
+                            in2 = "O"
+                        }
+                        in3 = array[2]
+                        in3 = in3.replace(' ','');
+                        if(in3=="0"){
+                            in3 = "I"
+                        }else{
+                            in3 = "O"
+                        }
+                        in4 = array[3]
+                        in4 = in4.replace(' ','');
+                        if(in4=="0"){
+                            in4 = "I"
+                        }else{
+                            in4 = "O"
+                        }
+                        in5 = array[4]
+                        in5 = in5.replace(' ','');
+                        if(in5=="0"){
+                            in5 = "I"
+                        }else{
+                            in5 = "O"
+                        }
+                        in6 = array[5]
+                        in6 = in6.replace(' ','');
+                        if(in6=="0"){
+                            in6 = "I"
+                        }else{
+                            in6 = "O"
+                        }
+                        in7 = array[6]
+                        in7 = in7.replace(' ','');
+                        if(in7=="0"){
+                            in7 = "I"
+                        }else{
+                            in7 = "O"
+                        }
+                        in8 = array[7]
+                        in8 = in8.replace(' ','');
+                        if(in8=="0"){
+                            in8 = "I"
+                        }else{
+                            in8 = "O"
+                        }
+                        in9 = array[8]
+                        in9 = in9.replace(' ','');
+                        if(in9=="0"){
+                            in9 = "I"
+                        }else{
+                            in9 = "O"
+                        }
+                        in10 = array[9]
+                        in10 = in10.replace(' ','');
+                        if(in10=="0"){
+                            in10 = "I"
+                        }else{
+                            in10 = "O"
+                        }
+                        in11 = array[10]
+                        in11 = in11.replace(' ','');
+                        if(in11=="0"){
+                            in11 = "I"
+                        }else{
+                            in11 = "O"
+                        }
+                        in12 = array[11]
+                        in12 = in12.replace(']','').replace(' ','');
+                        if(in12=="0"){
+                            in12 = "I"
+                        }else{
+                            in12 = "O"
+                        }
+
+                        document.getElementById("id1").innerHTML =
+                        '<div class="row">'+
+                        '<div class="col-xs-4 col-md-4">'+
+                        '<div class="form-group">In1: '+in1+'</div>'+
+                        '<div class="form-group">In2: '+in2+'</div>'+
+                        '<div class="form-group">In3: '+in3+'</div>'+
+                        '<div class="form-group">In4: '+in4+'</div>'+
+                        '</div>'+
+                        '<div class="col-xs-4 col-md-4">'+
+                        '<div class="form-group">In5: '+in5+'</div>'+
+                        '<div class="form-group">In6: '+in6+'</div>'+
+                        '<div class="form-group">In7: '+in7+'</div>'+
+                        '<div class="form-group">In8: '+in8+'</div>'+
+                        '</div>'+
+                        '<div class="col-xs-4 col-md-4">'+
+                        '<div class="form-group">&nbsp;&nbsp;In9: '+in9+'</div>'+
+                        '<div class="form-group">In10: '+in10+'</div>'+
+                        '<div class="form-group">In11: '+in11+'</div>'+
+                        '<div class="form-group">In12: '+in12+'</div>'+
+                        '</div>'
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "readlastvo",
+                    success: function (st) {
+                        document.getElementById("id4").innerHTML = 'Current Output Voltage: '+st
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusanaloginput",
+                    success: function (st) {
+                        var array = st.split(',');
+                        in1 = array[0]
+                        in1 = in1.replace('[','').replace('\'','').replace('\'','');
+                        in2 = array[1]
+                        in2 = in2.replace(']','').replace('\'','').replace('\'','');
+                        document.getElementById("id2").innerHTML = 'Input 1: '+in1
+                        document.getElementById("id3").innerHTML = 'Input 2: '+in2
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay1",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id10").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id10").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay2",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id11").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id11").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay3",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id12").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id12").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay4",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id13").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id13").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay5",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id14").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id14").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay6",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id15").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id15").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay7",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id16").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id16").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                jQuery.ajax({
+                    type: "POST",
+                    url: "statusrelay8",
+                    success: function (strel) {
+                        if(strel=="True"){
+                            document.getElementById("id17").innerHTML = 'ON'
+                        } else{
+                            document.getElementById("id17").innerHTML = 'OFF'
+                        }
+                    }
+                });
+
+                document.getElementById('buttonrelay1').onclick = function() {
+                   statusfunc("Relay 1")
+                };
+
+                document.getElementById('buttonrelay2').onclick = function() {
+                   statusfunc("Relay 2")
+                };
+
+                document.getElementById('buttonrelay3').onclick = function() {
+                   statusfunc("Relay 3")
+                };
+
+                document.getElementById('buttonrelay4').onclick = function() {
+                   statusfunc("Relay 4")
+                };
+
+                document.getElementById('buttonrelay5').onclick = function() {
+                   statusfunc("Relay 5")
+                };
+
+                document.getElementById('buttonrelay6').onclick = function() {
+                   statusfunc("Relay 6")
+                };
+
+                document.getElementById('buttonrelay7').onclick = function() {
+                   statusfunc("Relay 7")
+                };
+
+                document.getElementById('buttonrelay8').onclick = function() {
+                   statusfunc("Relay 8")
+                };
+
+                setTimeout(myutil, 500);
+            }
+
+            function statusfunc(value){
+                var stateurl = '';
+                if(value=="Relay 1"){
+                    stateurl = 'changerelay1'
+                }
+                else if(value=="Relay 2"){
+                    stateurl = 'changerelay2'
+                }
+                else if(value=="Relay 3"){
+                    stateurl = 'changerelay3'
+                }
+                else if(value=="Relay 4"){
+                    stateurl = 'changerelay4'
+                }
+                else if(value=="Relay 5"){
+                    stateurl = 'changerelay5'
+                }
+                else if(value=="Relay 6"){
+                    stateurl = 'changerelay6'
+                }
+                else if(value=="Relay 7"){
+                    stateurl = 'changerelay7'
+                }
+                else{
+                    stateurl = 'changerelay8'
+                }
+                jQuery.ajax({
+                    type: "POST",
+                    url: stateurl,
+                    success: function (st) {
+
+                    }
+                });
+            }
+            setTimeout(myutil, 100);
+        </script>
+    </body>
+</html>
